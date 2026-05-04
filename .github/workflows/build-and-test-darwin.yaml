@@ -31,6 +31,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     if: ${{ github.actor != 'dependabot[bot]' && (contains(github.event.pull_request.labels.*.name, 'Run Darwin') || github.event_name == 'push' || github.event_name == 'merge_group') }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         id: go-setup
@@ -53,6 +58,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         id: go-setup
@@ -81,6 +91,11 @@ jobs:
     timeout-minutes: 30
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         id: go-setup
@@ -99,6 +114,11 @@ jobs:
     runs-on: macos-latest
     needs: [darwin-unittest-matrix]
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Print result
         run: echo ${{ needs.darwin-unittest-matrix.result }}
       - name: Interpret result

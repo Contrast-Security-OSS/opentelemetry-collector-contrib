@@ -1,4 +1,4 @@
-FROM debian:13-slim
+FROM debian:13-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a
 
 ARG OTEL_COL_VERSION=0.136.0
 

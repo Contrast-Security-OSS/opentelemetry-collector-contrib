@@ -16,6 +16,11 @@ jobs:
       go_sources: ${{ steps.changes.outputs.go_sources }}
       go_tests: ${{ steps.changes.outputs.go_tests }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
@@ -63,6 +68,11 @@ jobs:
       # The gcc installed on the Windows arm64 runner doesn't ship native ARM libraries so we need to disable CGO.
       CGO_ENABLED: ${{ matrix.runner == 'windows-11-arm' && '0' || '' }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Echo changed files
         shell: bash
         run: |
@@ -105,6 +115,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [scoped-tests-matrix]
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Print result
         run: echo ${{ needs.scoped-tests-matrix.result }}
       - name: Interpret result
