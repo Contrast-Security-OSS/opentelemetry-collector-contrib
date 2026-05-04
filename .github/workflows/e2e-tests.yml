@@ -25,6 +25,11 @@ jobs:
     runs-on: ubuntu-24.04
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
@@ -49,6 +54,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: collector-build
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         id: go-setup
@@ -72,6 +82,11 @@ jobs:
   docker-build:
     runs-on: ubuntu-24.04
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
@@ -114,6 +129,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: docker-build
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: actions/setup-go@44694675825211faa026b3c33043df3e48a5fa00 # v6
         id: go-setup
@@ -154,6 +174,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [kubernetes-test-matrix]
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
+        with:
+          egress-policy: audit
+
       - name: Print result
         run: echo ${{ needs.kubernetes-test-matrix.result }}
       - name: Interpret result
